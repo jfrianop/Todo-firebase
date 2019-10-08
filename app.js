@@ -8,12 +8,12 @@ class Task {
 	addToList() {
 		$('ul.elements').append(
 			'<li> <p id="' +
-				this.id +
-				'">' +
-				this.title +
-				'</p><button class="delete-button" id="' +
-				this.id +
-				'"> X </button> </li>'
+			this.id +
+			'">' +
+			this.title +
+			'</p><button class="delete-button" id="' +
+			this.id +
+			'"> X </button> </li>'
 		)
 		if (this.done) {
 			$('#' + this.id).addClass('marked')
@@ -22,14 +22,17 @@ class Task {
 		}
 	}
 }
-const loadToDo = function() {
-	const toDoList = fetch('http://makeitreal-todo.herokuapp.com/todo_items').then(function(response) {
+
+//GET todo from server
+const loadToDo = function () {
+	const toDoList = fetch('http://makeitreal-todo.herokuapp.com/todo_items').then(function (response) {
 		return response.json()
 	})
 	return toDoList
 }
 
-const loadTask = function(toDoList) {
+//Declares Task objects from the todo loaded from server
+const loadTask = function (toDoList) {
 	let taskList = []
 	toDoList.forEach((toDo) => {
 		taskList.push(new Task(toDo))
@@ -37,21 +40,23 @@ const loadTask = function(toDoList) {
 	displayTasks(taskList)
 }
 
-const displayTasks = function(taskList) {
+//Displays eack task from tasklist
+const displayTasks = function (taskList) {
 	$('ul.elements').html('')
 	taskList.forEach((task) => {
 		task.addToList()
 	})
 }
 
-const initialList = function() {
+//Initial Loader
+const initialList = function () {
 	loadToDo().then((e) => loadTask(e))
 }
 
-const postTask = function(taskTitle) {
+//POST task to server
+const postTask = function (taskTitle) {
 	var url = 'http://makeitreal-todo.herokuapp.com/todo_items'
 	var data = { title: taskTitle }
-	console.log(JSON.stringify(data))
 
 	fetch(url, {
 		method: 'POST', // or 'PUT'
@@ -65,7 +70,8 @@ const postTask = function(taskTitle) {
 		.then(() => initialList())
 }
 
-const patchTask = function(taskDone, taskId) {
+//PATCH task done status to server
+const patchTask = function (taskDone, taskId) {
 	var url = 'http://makeitreal-todo.herokuapp.com/todo_items/' + taskId
 	var data = { done: taskDone }
 
@@ -78,7 +84,8 @@ const patchTask = function(taskDone, taskId) {
 	}).then(() => initialList())
 }
 
-const deleteTask = function(taskId) {
+//DELETE task from server
+const deleteTask = function (taskId) {
 	var url = 'http://makeitreal-todo.herokuapp.com/todo_items/' + taskId
 
 	fetch(url, {
@@ -89,20 +96,22 @@ const deleteTask = function(taskId) {
 	}).then(() => initialList())
 }
 
+
+//Jquery listeners
 $(document).ready(initialList)
 
-$('#new-task').on('keypress', function(e) {
+$('#new-task').on('keypress', function (e) {
 	if (e.which === 13) {
 		postTask($('#new-task').val())
 		$('#new-task').val('')
 	}
 })
 
-$('ul').on('click', 'li p', function(e) {
+$('ul').on('click', 'li p', function (e) {
 	let taskId = $(this).attr('id')
 	patchTask(!$(this).hasClass('marked'), taskId)
 })
 
-$('ul').on('click', 'li button', function(e) {
+$('ul').on('click', 'li button', function (e) {
 	deleteTask($(this).attr('id'))
 })
