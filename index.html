@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Nuevos elementos</title>
-  <link rel='stylesheet' href='styles.css'/>
+  <link rel='stylesheet' href='styles.css' />
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
+
+  <form class="login px-5 w-40">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Correo Electónico</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="ejemplo@ejm.com">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Contraseña</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="*******">
+    </div>
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+  </form>
+
   <div class="wrapper">
     <div class="list">
       <h3>Elementos:</h3>
       <ul class="elements">
       </ul>
-        <input type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter">
+      <input type="text" id="new-task" placeholder="Ingresa una tarea y oprime Enter">
     </div>
   </div>
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.1.0/firebase-auth.js"></script>
   <script src='app.js'></script>
 </body>
+
 </html>
